@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 export default function NavMenu() {
   return (
-    <nav className="sticky top-0 z-50 select-none">
+    <nav className="sticky top-0 z-50 select-none bg-background">
       <div className="container ml-4 px-4 py-4">
         <div className="flex items-center gap-2">
           <Link href="/" aria-label="Home">
