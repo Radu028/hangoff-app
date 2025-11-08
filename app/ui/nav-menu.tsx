@@ -10,16 +10,17 @@ import Link from 'next/link';
 
 export default function NavMenu() {
   return (
-    <header className="border-b select-none">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center gap-8">
+    <nav className="sticky top-0 z-50 select-none">
+      <div className="container ml-4 px-4 py-4">
+        <div className="flex items-center gap-2">
           <Link href="/" aria-label="Home">
             <Image
               src="/logo.svg"
               alt="Hangoff Logo"
-              width={100}
-              height={20}
+              width={800}
+              height={160}
               priority
+              className="h-6 w-auto"
             />
           </Link>
           <NavigationMenu>
@@ -60,6 +61,6 @@ export default function NavMenu() {
           </NavigationMenu>
         </div>
       </div>
-    </header>
+    </nav>
   );
 }
