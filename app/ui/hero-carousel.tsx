@@ -42,9 +42,9 @@ export default function HeroCarousel() {
       }}
       setApi={setApi}
     >
-      <CarouselContent className="ml-0 h-full">
+      <CarouselContent className="ml-0 h-full w-full">
         {IMAGES.map((image, index) => (
-          <CarouselItem key={index} className="pl-0 h-full">
+          <CarouselItem key={index} className="pl-0 h-full w-full">
             <Image
               src={image.src}
               alt={`Hero ${index + 1}`}
