@@ -44,13 +44,20 @@ function useCarouselNavigation(api: CarouselApi | undefined) {
       setCurrent(api.selectedScrollSnap());
     };
 
+    // Reset timer on any manual interaction (drag, swipe, etc.)
+    const onPointerDown = () => {
+      resetTimer();
+    };
+
     api.on('select', onSelect);
+    api.on('pointerDown', onPointerDown);
     onSelect();
 
     return () => {
       api.off('select', onSelect);
+      api.off('pointerDown', onPointerDown);
     };
-  }, [api]);
+  }, [api, resetTimer]);
 
   const scrollPrev = useCallback(() => {
     api?.scrollPrev();
