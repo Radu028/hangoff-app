@@ -251,11 +251,10 @@ function CartMenu() {
 }
 
 export default function NavBar() {
-  // Simulăm starea de autentificare - în viitor va fi înlocuit cu autentificare reală
   const [isAuthenticated] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 select-none bg-background w-full border-b">
+    <nav className="sticky top-0 z-50 select-none bg-background w-full">
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4">
         <div className="flex items-center gap-1 ml-4">
           <NavigationMenu viewport={false} className="max-w-full">

@@ -19,7 +19,7 @@ export default function InfiniteCarousel() {
 
   const LogoStrip = ({ keyPrefix }: { keyPrefix: string }) => (
     <motion.div
-      className="flex gap-16 pr-16"
+      className="flex gap-8 pr-8"
       animate={{
         x: [0, '-100%'],
       }}
@@ -35,14 +35,14 @@ export default function InfiniteCarousel() {
       {duplicatedImages.map((image, index) => (
         <div
           key={`${keyPrefix}-${index}`}
-          className="shrink-0 flex items-center justify-center min-w-[140px]"
+          className="shrink-0 flex items-center justify-center min-w-[140px] h-full"
         >
           <Image
             src={image}
             alt={`Logo ${(index % IMAGES.length) + 1}`}
             width={120}
             height={60}
-            className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+            className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 max-h-full"
           />
         </div>
       ))}
@@ -50,7 +50,7 @@ export default function InfiniteCarousel() {
   );
 
   return (
-    <div className="relative w-full overflow-hidden py-8">
+    <div className="relative w-full h-full overflow-hidden flex items-center">
       <div className="flex">
         <LogoStrip keyPrefix="first" />
         <LogoStrip keyPrefix="second" />
