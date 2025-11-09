@@ -124,7 +124,7 @@ function CartMenu() {
   );
 }
 
-export default function NavMenu() {
+export default function NavBar() {
   return (
     <nav className="sticky top-0 z-50 select-none bg-background w-full">
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4">
