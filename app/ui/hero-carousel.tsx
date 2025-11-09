@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import {
   Carousel,
@@ -11,6 +11,67 @@ import {
 import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
 
 const IMAGES = ['/hero/boxes.jpg', '/hero/ice.jpg'] as const;
+const AUTO_SWIPE_INTERVAL = 5000; // milliseconds
+
+function useCarouselAutoplay(api: CarouselApi | undefined) {
+  const [autoSwipeKey, setAutoSwipeKey] = useState(0);
+
+  const resetTimer = useCallback(() => {
+    setAutoSwipeKey((prev) => prev + 1);
+  }, []);
+
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, AUTO_SWIPE_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [api, autoSwipeKey]);
+
+  return resetTimer;
+}
+
+function useCarouselNavigation(api: CarouselApi | undefined) {
+  const [current, setCurrent] = useState(0);
+  const resetTimer = useCarouselAutoplay(api);
+
+  useEffect(() => {
+    if (!api) return;
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on('select', onSelect);
+    onSelect();
+
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
+
+  const scrollPrev = useCallback(() => {
+    api?.scrollPrev();
+    resetTimer();
+  }, [api, resetTimer]);
+
+  const scrollNext = useCallback(() => {
+    api?.scrollNext();
+    resetTimer();
+  }, [api, resetTimer]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      api?.scrollTo(index);
+      resetTimer();
+    },
+    [api, resetTimer]
+  );
+
+  return { current, scrollPrev, scrollNext, scrollTo };
+}
 
 function HeroText() {
   return (
@@ -35,11 +96,89 @@ function HeroText() {
   );
 }
 
+function CarouselSlide({ image, index }: { image: string; index: number }) {
+  return (
+    <CarouselItem className="pl-0 h-full">
+      <div className="relative h-full">
+        <Image
+          src={image}
+          alt={`Hero ${index + 1}`}
+          fill
+          priority={index === 0}
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center center',
+          }}
+        />
+        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+      </div>
+    </CarouselItem>
+  );
+}
+
+function NavigationButton({
+  direction,
+  onClick,
+  isHidden,
+}: {
+  direction: 'prev' | 'next';
+  onClick: () => void;
+  isHidden: boolean;
+}) {
+  const isPrev = direction === 'prev';
+  const Icon = isPrev ? ChevronLeft : ChevronRight;
+
+  return (
+    <button
+      onClick={onClick}
+      className={`absolute ${
+        isPrev ? 'left-4' : 'right-4'
+      } top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-white/10 hover:bg-white/20 border-none text-white backdrop-blur-sm flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 transition-opacity duration-300 ${
+        isHidden ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}
+      aria-label={`${isPrev ? 'Previous' : 'Next'} slide`}
+    >
+      <Icon className="size-6" />
+    </button>
+  );
+}
+
+function NavigationDots({
+  count,
+  current,
+  onSelect,
+  onHoverChange,
+}: {
+  count: number;
+  current: number;
+  onSelect: (index: number) => void;
+  onHoverChange: (isHovered: boolean) => void;
+}) {
+  return (
+    <div
+      className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-3 py-2"
+      onMouseEnter={() => onHoverChange(true)}
+      onMouseLeave={() => onHoverChange(false)}
+    >
+      {Array.from({ length: count }).map((_, index) => (
+        <button
+          key={index}
+          onClick={() => onSelect(index)}
+          className={`size-2 rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 cursor-pointer ${
+            current === index ? 'bg-white/90' : 'bg-white/30 hover:bg-white/50'
+          }`}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
-
-  const scrollPrev = useCallback(() => api?.scrollPrev(), [api]);
-  const scrollNext = useCallback(() => api?.scrollNext(), [api]);
+  const [isDotsHovered, setIsDotsHovered] = useState(false);
+  const { current, scrollPrev, scrollNext, scrollTo } =
+    useCarouselNavigation(api);
 
   return (
     <Carousel
@@ -49,42 +188,30 @@ export default function HeroCarousel() {
     >
       <CarouselContent className="ml-0 h-full">
         {IMAGES.map((image, index) => (
-          <CarouselItem key={index} className="pl-0 h-full">
-            <div className="relative h-full">
-              <Image
-                src={image}
-                alt={`Hero ${index + 1}`}
-                fill
-                priority={index === 0}
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center center',
-                }}
-              />
-
-              <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-            </div>
-          </CarouselItem>
+          <CarouselSlide key={index} image={image} index={index} />
         ))}
       </CarouselContent>
 
       <HeroText />
 
-      <button
+      <NavigationButton
+        direction="prev"
         onClick={scrollPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-white/10 hover:bg-white/20 border-none text-white backdrop-blur-sm transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="size-6" />
-      </button>
+        isHidden={isDotsHovered}
+      />
 
-      <button
+      <NavigationButton
+        direction="next"
         onClick={scrollNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-white/10 hover:bg-white/20 border-none text-white backdrop-blur-sm transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="size-6" />
-      </button>
+        isHidden={isDotsHovered}
+      />
+
+      <NavigationDots
+        count={IMAGES.length}
+        current={current}
+        onSelect={scrollTo}
+        onHoverChange={setIsDotsHovered}
+      />
     </Carousel>
   );
 }
