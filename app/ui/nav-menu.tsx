@@ -22,7 +22,7 @@ const LINKS = [
 
 function Logo() {
   return (
-    <NavigationMenuItem className="flex-1">
+    <NavigationMenuItem>
       <NavigationMenuLink href="/">
         <Image
           src="/logo.svg"
@@ -79,7 +79,7 @@ function AccountMenu() {
       >
         <UserRound className="size-4" />
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      <NavigationMenuContent className="right-0 left-auto">
         <ul className="grid w-[200px] gap-2 p-4">
           <li>
             <NavigationMenuLink href="/account">
@@ -112,7 +112,7 @@ function CartMenu() {
       >
         <ShoppingBag className="size-4" />
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      <NavigationMenuContent className="right-0 left-auto">
         <ul className="grid w-[300px] gap-4 p-4">
           <li>
             <div className="text-sm font-medium">Your Cart</div>
@@ -126,21 +126,29 @@ function CartMenu() {
 
 export default function NavMenu() {
   return (
-    <NavigationMenu
-      viewport={false}
-      className="sticky top-0 z-50 select-none bg-background w-full"
-    >
-      <NavigationMenuList className="container ml-4 px-4 py-4 w-full">
-        <Logo />
+    <nav className="sticky top-0 z-50 select-none bg-background w-full">
+      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4">
+        <div className="flex items-center gap-1 ml-4">
+          <NavigationMenu viewport={false} className="max-w-full">
+            <NavigationMenuList>
+              <Logo />
+              <NavLinks links={LINKS} />
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
 
-        <NavLinks links={LINKS} />
+        <div />
 
-        <SearchButton />
-
-        <AccountMenu />
-
-        <CartMenu />
-      </NavigationMenuList>
-    </NavigationMenu>
+        <div className="flex items-center gap-1 mr-4">
+          <NavigationMenu viewport={false} className="max-w-full">
+            <NavigationMenuList>
+              <SearchButton />
+              <AccountMenu />
+              <CartMenu />
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+      </div>
+    </nav>
   );
 }
