@@ -14,10 +14,10 @@ const IMAGES = [
 
 const SPEED = 60;
 
-export default function TrustedByCarousel() {
+function LogoStrip({ keyPrefix }: { keyPrefix: string }) {
   const duplicatedImages = [...IMAGES, ...IMAGES];
 
-  const LogoStrip = ({ keyPrefix }: { keyPrefix: string }) => (
+  return (
     <motion.div
       className="flex gap-8 pr-8"
       animate={{
@@ -48,7 +48,9 @@ export default function TrustedByCarousel() {
       ))}
     </motion.div>
   );
+}
 
+export default function TrustedByCarousel() {
   return (
     <div className="relative w-full h-full overflow-hidden flex items-center">
       <div className="flex">
