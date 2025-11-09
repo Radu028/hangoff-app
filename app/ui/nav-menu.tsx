@@ -10,6 +10,13 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
+const LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/merch', label: 'Merch' },
+];
+
 export default function NavMenu() {
   return (
     <nav className="sticky top-0 z-50 select-none bg-background">
@@ -27,38 +34,16 @@ export default function NavMenu() {
           </Link>
           <NavigationMenu>
             <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="/"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  Home
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="/about"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  About
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="/shop"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  Shop
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="/merch"
-                  className={navigationMenuTriggerStyle()}
-                >
-                  Merch
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+              {LINKS.map((link) => (
+                <NavigationMenuItem key={link.href}>
+                  <NavigationMenuLink
+                    href={link.href}
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    {link.label}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
