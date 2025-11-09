@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -14,6 +14,42 @@ const MESSAGES = [
   '0% OFF YOUR FIRST ORDER',
 ];
 const INTERVAL = 5000;
+
+function usePromoCycle(length: number, interval: number = 5000) {
+  const [index, setIndex] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const clearTimer = useCallback(() => {
+    if (timerRef.current !== null) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const startTimer = useCallback(() => {
+    clearTimer();
+    if (!length) return;
+    timerRef.current = setInterval(() => {
+      setIndex((i) => (i + 1) % length);
+    }, interval);
+  }, [clearTimer, length, interval]);
+
+  const cycleMessage = useCallback(
+    (offset: number) => {
+      setIndex((i) => (i + offset + length) % length);
+      startTimer();
+    },
+    [length, startTimer]
+  );
+
+  useEffect(() => {
+    setIndex((i) => (length ? i % length : 0));
+    startTimer();
+    return clearTimer;
+  }, [length, interval, startTimer, clearTimer]);
+
+  return { index, cycleMessage };
+}
 
 function ArrowButton({
   direction,
@@ -58,30 +94,18 @@ function PromoMessage({ text, keyId }: { text: string; keyId: number }) {
 }
 
 export default function PromoBar() {
-  const [index, setIndex] = useState(0);
-
-  const cycleIndex = (offset: number) => {
-    setIndex((i) => (i + offset + MESSAGES.length) % MESSAGES.length);
-  };
-
-  useEffect(() => {
-    if (!MESSAGES.length) return;
-    const id = setInterval(() => {
-      cycleIndex(1);
-    }, INTERVAL);
-    return () => clearInterval(id);
-  }, [MESSAGES, INTERVAL]);
+  const { index, cycleMessage } = usePromoCycle(MESSAGES.length, INTERVAL);
 
   return (
     <div className="w-full border-b bg-[#f36c21]">
       <div className="grid grid-cols-[auto_1fr_auto] items-center py-2">
-        <ArrowButton direction="left" onClick={() => cycleIndex(-1)} />
+        <ArrowButton direction="left" onClick={() => cycleMessage(-1)} />
 
         <div className="text-center text-xs text-white overflow-hidden col-start-2">
           <PromoMessage text={MESSAGES[index]} keyId={index} />
         </div>
 
-        <ArrowButton direction="right" onClick={() => cycleIndex(1)} />
+        <ArrowButton direction="right" onClick={() => cycleMessage(1)} />
       </div>
     </div>
   );
