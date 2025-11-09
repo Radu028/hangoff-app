@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import InfiniteCarousel from './ui/infinite-carousel';
+import TrustedByCarousel from './ui/trusted-by-carousel';
 
 export default function Home() {
   return (
@@ -22,7 +22,7 @@ export default function Home() {
         <div className="relative w-full flex-2 flex flex-col pt-6 pb-2">
           <h2 className="text-4xl font-bold mb-2 text-center">TRUSTED BY</h2>
           <div className="flex-1 flex items-center overflow-hidden">
-            <InfiniteCarousel />
+            <TrustedByCarousel />
           </div>
         </div>
       </section>

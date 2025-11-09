@@ -14,7 +14,7 @@ const IMAGES = [
 
 const SPEED = 60;
 
-export default function InfiniteCarousel() {
+export default function TrustedByCarousel() {
   const duplicatedImages = [...IMAGES, ...IMAGES];
 
   const LogoStrip = ({ keyPrefix }: { keyPrefix: string }) => (
