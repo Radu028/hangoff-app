@@ -8,9 +8,32 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
 
 const IMAGES = ['/hero/boxes.jpg', '/hero/ice.jpg'] as const;
+
+function HeroText() {
+  return (
+    <div className="absolute inset-0 grid place-items-center pointer-events-none z-10">
+      <div className="grid grid-cols-1 text-white px-4">
+        <p className="text-4xl md:text-2xl font-bold text-center">
+          Shot-uri functionale, ca tu sa functionezi
+        </p>
+        <p className="text-xs font-medium text-left leading-tight">
+          Simte-te bine si dupa petrece. <br />
+          Suplimente alimentare, nu medicamente.
+        </p>
+
+        <div className="flex-col items-center text-center gap-4">
+          <ShieldCheck className="size-12 mx-auto mt-8" />
+          <p className="text-[0.6rem] font-extrabold leading-tight mt-1">
+            SWISS MADE
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
@@ -38,10 +61,14 @@ export default function HeroCarousel() {
                   objectPosition: 'center center',
                 }}
               />
+
+              <div className="absolute inset-0 bg-black/20 pointer-events-none" />
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
+
+      <HeroText />
 
       <button
         onClick={scrollPrev}
