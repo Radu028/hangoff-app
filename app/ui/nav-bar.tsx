@@ -9,9 +9,19 @@ import {
   NavigationMenuContent,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { Search, ShoppingBag, UserRound } from 'lucide-react';
+import {
+  Search,
+  ShoppingBag,
+  UserRound,
+  Package,
+  LogOut,
+  LogIn,
+  UserPlus,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 const LINKS = [
   { href: '/', label: 'Home' },
@@ -37,9 +47,15 @@ function Logo() {
   );
 }
 
-function NavLinks({ links }: { links: { href: string; label: string }[] }) {
+function NavLinks({
+  links,
+  className,
+}: {
+  links: { href: string; label: string }[];
+  className?: string;
+}) {
   return (
-    <>
+    <div className={cn('flex items-center gap-2', className)}>
       {links.map((link) => (
         <NavigationMenuItem key={link.href}>
           <NavigationMenuLink
@@ -50,7 +66,7 @@ function NavLinks({ links }: { links: { href: string; label: string }[] }) {
           </NavigationMenuLink>
         </NavigationMenuItem>
       ))}
-    </>
+    </div>
   );
 }
 
@@ -70,7 +86,7 @@ function SearchButton() {
   );
 }
 
-function AccountMenu() {
+function AccountMenu({ authenticated }: { authenticated: boolean }) {
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
@@ -80,23 +96,78 @@ function AccountMenu() {
         <UserRound className="size-4" />
       </NavigationMenuTrigger>
       <NavigationMenuContent className="right-0 left-auto">
-        <ul className="grid w-[200px] gap-2 p-4">
-          <li>
-            <NavigationMenuLink href="/account">
-              <div className="text-sm font-medium leading-none">My Account</div>
-              <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                View and manage your account settings
-              </p>
-            </NavigationMenuLink>
-          </li>
-          <li>
-            <NavigationMenuLink href="/orders">
-              <div className="text-sm font-medium leading-none">Orders</div>
-              <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                Track your orders and purchases
-              </p>
-            </NavigationMenuLink>
-          </li>
+        <ul className="grid w-[280px] gap-2 p-4">
+          {authenticated ? (
+            <>
+              <li>
+                <NavigationMenuLink
+                  href="/orders"
+                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                >
+                  <Package className="size-5 text-muted-foreground" />
+                  <div>
+                    <div className="text-sm font-medium leading-none">
+                      Orders
+                    </div>
+                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                      Track your orders and purchases
+                    </p>
+                  </div>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink
+                  href="/signout"
+                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                >
+                  <LogOut className="size-5 text-muted-foreground" />
+                  <div>
+                    <div className="text-sm font-medium leading-none">
+                      Sign Out
+                    </div>
+                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                      Log out of your account
+                    </p>
+                  </div>
+                </NavigationMenuLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavigationMenuLink
+                  href="/signup"
+                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                >
+                  <UserPlus className="size-5 text-muted-foreground" />
+                  <div>
+                    <div className="text-sm font-medium leading-none">
+                      Sign Up
+                    </div>
+                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                      Create a new account
+                    </p>
+                  </div>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink
+                  href="/login"
+                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                >
+                  <LogIn className="size-5 text-muted-foreground" />
+                  <div>
+                    <div className="text-sm font-medium leading-none">
+                      Log In
+                    </div>
+                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                      Sign in to your account
+                    </p>
+                  </div>
+                </NavigationMenuLink>
+              </li>
+            </>
+          )}
         </ul>
       </NavigationMenuContent>
     </NavigationMenuItem>
@@ -104,6 +175,16 @@ function AccountMenu() {
 }
 
 function CartMenu() {
+  // Simulăm un coș gol - în viitor va fi înlocuit cu date reale
+  const cartItems: Array<{
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }> = [];
+  const isEmpty = cartItems.length === 0;
+
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
@@ -113,26 +194,74 @@ function CartMenu() {
         <ShoppingBag className="size-4" />
       </NavigationMenuTrigger>
       <NavigationMenuContent className="right-0 left-auto">
-        <ul className="grid w-[300px] gap-4 p-4">
-          <li>
-            <div className="text-sm font-medium">Your Cart</div>
-            <p className="text-muted-foreground text-sm">Coșul tău este gol</p>
-          </li>
-        </ul>
+        <div className="w-[350px] p-4">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold">Shopping Cart</h3>
+            <p className="text-muted-foreground text-sm">
+              {isEmpty
+                ? 'Your cart is empty'
+                : `${cartItems.length} items in cart`}
+            </p>
+          </div>
+
+          {isEmpty ? (
+            <div className="py-8 text-center">
+              <ShoppingBag className="size-12 mx-auto mb-4 text-muted-foreground/50" />
+              <p className="text-muted-foreground text-sm mb-4">
+                Your cart is empty
+              </p>
+              <NavigationMenuLink href="/shop" className="w-full">
+                <Button className="w-full">Continue Shopping</Button>
+              </NavigationMenuLink>
+            </div>
+          ) : (
+            <>
+              <ul className="space-y-3 mb-4">
+                {cartItems.map((item) => (
+                  <li
+                    key={item.id}
+                    className="flex gap-3 p-2 rounded-md hover:bg-accent"
+                  >
+                    <div className="size-16 bg-muted rounded-md" />
+                    <div className="flex-1">
+                      <div className="text-sm font-medium">{item.name}</div>
+                      <div className="text-xs text-muted-foreground">
+                        Qty: {item.quantity}
+                      </div>
+                      <div className="text-sm font-semibold">${item.price}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t pt-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="font-semibold">$0.00</span>
+                </div>
+                <NavigationMenuLink href="/cart" className="w-full">
+                  <Button className="w-full">View Cart & Checkout</Button>
+                </NavigationMenuLink>
+              </div>
+            </>
+          )}
+        </div>
       </NavigationMenuContent>
     </NavigationMenuItem>
   );
 }
 
 export default function NavBar() {
+  // Simulăm starea de autentificare - în viitor va fi înlocuit cu autentificare reală
+  const [isAuthenticated] = useState(false);
+
   return (
-    <nav className="sticky top-0 z-50 select-none bg-background w-full">
+    <nav className="sticky top-0 z-50 select-none bg-background w-full border-b">
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4">
         <div className="flex items-center gap-1 ml-4">
           <NavigationMenu viewport={false} className="max-w-full">
             <NavigationMenuList>
               <Logo />
-              <NavLinks links={LINKS} />
+              <NavLinks links={LINKS} className="ml-4" />
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -143,7 +272,7 @@ export default function NavBar() {
           <NavigationMenu viewport={false} className="max-w-full">
             <NavigationMenuList>
               <SearchButton />
-              <AccountMenu />
+              <AccountMenu authenticated={isAuthenticated} />
               <CartMenu />
             </NavigationMenuList>
           </NavigationMenu>
