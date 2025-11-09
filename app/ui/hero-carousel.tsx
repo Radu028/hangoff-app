@@ -1,58 +1,44 @@
 'use client';
 
+import { useState, useCallback } from 'react';
+import Image from 'next/image';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from '@/components/ui/carousel';
-import type { CarouselApi } from '@/components/ui/carousel';
-import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState, useCallback } from 'react';
 
-const IMAGES = [
-  {
-    src: '/hero/boxes.jpg',
-    width: 3840,
-    height: 2400,
-  },
-  {
-    src: '/hero/ice.jpg',
-    width: 3024,
-    height: 4032,
-  },
-];
+const IMAGES = ['/hero/boxes.jpg', '/hero/ice.jpg'] as const;
 
 export default function HeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
 
-  const scrollPrev = useCallback(() => {
-    api?.scrollPrev();
-  }, [api]);
-
-  const scrollNext = useCallback(() => {
-    api?.scrollNext();
-  }, [api]);
+  const scrollPrev = useCallback(() => api?.scrollPrev(), [api]);
+  const scrollNext = useCallback(() => api?.scrollNext(), [api]);
 
   return (
     <Carousel
-      className="w-full h-full"
-      opts={{
-        loop: true,
-      }}
+      className="relative h-full *:data-[slot=carousel-content]:h-full *:data-[slot=carousel-item]:h-full"
+      opts={{ loop: true }}
       setApi={setApi}
     >
-      <CarouselContent className="ml-0 h-full w-full">
+      <CarouselContent className="ml-0 h-full">
         {IMAGES.map((image, index) => (
-          <CarouselItem key={index} className="pl-0 h-full w-full">
-            <Image
-              src={image.src}
-              alt={`Hero ${index + 1}`}
-              width={image.width}
-              height={image.height}
-              className="w-full h-full object-cover"
-              priority
-            />
+          <CarouselItem key={index} className="pl-0 h-full">
+            <div className="relative h-full">
+              <Image
+                src={image}
+                alt={`Hero ${index + 1}`}
+                fill
+                priority={index === 0}
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center center',
+                }}
+              />
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>
