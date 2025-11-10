@@ -96,7 +96,7 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
         <UserRound className="size-4" />
       </NavigationMenuTrigger>
       <NavigationMenuContent className="right-0 left-auto">
-        <ul className="grid w-[280px] gap-2 p-4">
+        <ul className="grid w-[280px] gap-2 p-2">
           {authenticated ? (
             <>
               <li>
@@ -137,7 +137,7 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
               <li>
                 <NavigationMenuLink
                   href="/signup"
-                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                  className="flex items-center gap-4 p-4 rounded-md hover:bg-accent transition-colors"
                 >
                   <UserPlus className="size-5 text-muted-foreground" />
                   <div>
@@ -175,7 +175,6 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
 }
 
 function CartMenu() {
-  // Simulăm un coș gol - în viitor va fi înlocuit cu date reale
   const cartItems: Array<{
     id: string;
     name: string;
