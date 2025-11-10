@@ -3,12 +3,10 @@
 import {
   NavigationMenuItem,
   NavigationMenuLink,
-  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
 
 export function Logo() {
   return (
@@ -24,29 +22,6 @@ export function Logo() {
         />
       </NavigationMenuLink>
     </NavigationMenuItem>
-  );
-}
-
-export function NavLinks({
-  links,
-  className,
-}: {
-  links: { href: string; label: string }[];
-  className?: string;
-}) {
-  return (
-    <div className={cn('flex items-center gap-2', className)}>
-      {links.map((link) => (
-        <NavigationMenuItem key={link.href}>
-          <NavigationMenuLink
-            href={link.href}
-            className={navigationMenuTriggerStyle()}
-          >
-            {link.label}
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      ))}
-    </div>
   );
 }
 

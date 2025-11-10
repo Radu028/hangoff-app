@@ -7,11 +7,10 @@ import {
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
-import { Logo, NavLinks, SearchButton } from './nav-elements';
+import { Logo, SearchButton } from './nav-elements';
+import { NavLinks, MobileNavLinks } from './nav-links';
 import { AccountMenu } from './account-menu';
 import { CartMenu } from './cart-menu';
-import { MobileMenu } from './mobile-menu';
-import { LINKS } from './constants';
 
 export default function NavBar() {
   const [isAuthenticated] = useState(false);
@@ -24,7 +23,7 @@ export default function NavBar() {
           <div className="flex items-center gap-1">
             <NavigationMenu viewport={false} className="max-w-full">
               <NavigationMenuList>
-                <MobileMenu links={LINKS} />
+                <MobileNavLinks />
               </NavigationMenuList>
             </NavigationMenu>
             <SearchButton />
@@ -41,7 +40,7 @@ export default function NavBar() {
           <NavigationMenu viewport={false} className="max-w-full">
             <NavigationMenuList>
               <Logo />
-              {!isMobile && <NavLinks links={LINKS} className="ml-4" />}
+              {!isMobile && <NavLinks className="ml-4" />}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
