@@ -35,7 +35,7 @@ export function NavLinks({
   className?: string;
 }) {
   return (
-    <div className={cn('hidden md:flex items-center gap-2', className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       {links.map((link) => (
         <NavigationMenuItem key={link.href}>
           <NavigationMenuLink
@@ -65,4 +65,3 @@ export function SearchButton() {
     </Button>
   );
 }
-
