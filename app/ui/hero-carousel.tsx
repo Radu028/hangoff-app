@@ -94,7 +94,7 @@ function useCarouselNavigation(api: CarouselApi | undefined) {
 
 function HeroText() {
   return (
-    <div className="absolute inset-0 grid place-items-center pointer-events-none z-10">
+    <div className="absolute inset-0 grid place-items-center pointer-events-none z-10 [@media(max-height:500px)]:hidden">
       <div className="grid grid-cols-1 text-white px-4">
         <p className="text-md md:text-2xl font-bold text-center">
           Shot-uri functionale, ca tu sa functionezi
