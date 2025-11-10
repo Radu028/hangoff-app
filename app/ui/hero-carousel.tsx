@@ -15,20 +15,32 @@ const AUTO_SWIPE_INTERVAL = 5000; // milliseconds
 
 function useCarouselAutoplay(api: CarouselApi | undefined) {
   const [autoSwipeKey, setAutoSwipeKey] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
   const resetTimer = useCallback(() => {
     setAutoSwipeKey((prev) => prev + 1);
   }, []);
 
   useEffect(() => {
-    if (!api) return;
+    const handleVisibilityChange = () => {
+      setIsVisible(!document.hidden);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!api || !isVisible) return;
 
     const interval = setInterval(() => {
       api.scrollNext();
     }, AUTO_SWIPE_INTERVAL);
 
     return () => clearInterval(interval);
-  }, [api, autoSwipeKey]);
+  }, [api, autoSwipeKey, isVisible]);
 
   return resetTimer;
 }
