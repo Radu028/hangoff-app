@@ -55,7 +55,7 @@ function NavLinks({
   className?: string;
 }) {
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className={cn('hidden md:flex items-center gap-2', className)}>
       {links.map((link) => (
         <NavigationMenuItem key={link.href}>
           <NavigationMenuLink
@@ -254,8 +254,8 @@ export default function NavBar() {
 
   return (
     <nav className="sticky top-0 z-50 select-none bg-background w-full">
-      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-4">
-        <div className="flex items-center gap-1 ml-4">
+      <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 px-2 py-3 md:py-4">
+        <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:flex md:items-center md:gap-1 md:ml-4">
           <NavigationMenu viewport={false} className="max-w-full">
             <NavigationMenuList>
               <Logo />
@@ -264,9 +264,9 @@ export default function NavBar() {
           </NavigationMenu>
         </div>
 
-        <div />
+        <div className="md:col-start-2" />
 
-        <div className="flex items-center gap-1 mr-4">
+        <div className="flex items-center gap-1 sm:mr-4 ml-auto md:col-start-3">
           <NavigationMenu viewport={false} className="max-w-full">
             <NavigationMenuList>
               <SearchButton />
