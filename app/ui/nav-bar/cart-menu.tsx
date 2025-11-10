@@ -29,9 +29,9 @@ export function CartMenu() {
       >
         <ShoppingBag className="size-4" />
       </NavigationMenuTrigger>
-      <NavigationMenuContent className="[&]:absolute [&]:right-0 [&]:left-auto [&]:w-[280px] [&]:z-50 [&]:overflow-visible md:[&]:w-[350px]">
-        <div className="p-3 md:p-4">
-          <div className="mb-3 md:mb-4">
+      <NavigationMenuContent className="absolute right-0 left-auto w-[280px] z-50 overflow-visible md:w-[350px]">
+        <div className="p-2 md:p-4">
+          <div className="mb-4">
             <h3 className="text-base md:text-lg font-semibold">
               Shopping Cart
             </h3>
@@ -42,11 +42,7 @@ export function CartMenu() {
             </p>
           </div>
 
-          {isEmpty ? (
-            <EmptyCart />
-          ) : (
-            <CartWithItems items={cartItems} />
-          )}
+          {isEmpty ? <EmptyCart /> : <CartWithItems items={cartItems} />}
         </div>
       </NavigationMenuContent>
     </NavigationMenuItem>
@@ -55,7 +51,7 @@ export function CartMenu() {
 
 function EmptyCart() {
   return (
-    <div className="py-6 md:py-8 text-center">
+    <div className="pt-8 text-center">
       <ShoppingBag className="size-10 md:size-12 mx-auto mb-3 md:mb-4 text-muted-foreground/50" />
       <p className="text-muted-foreground text-xs md:text-sm mb-3 md:mb-4">
         Your cart is empty
@@ -101,4 +97,3 @@ function CartWithItems({ items }: { items: CartItem[] }) {
     </>
   );
 }
-

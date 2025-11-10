@@ -53,8 +53,8 @@ export function AccountMenu({ authenticated }: AccountMenuProps) {
       >
         <UserRound className="size-4" />
       </NavigationMenuTrigger>
-      <NavigationMenuContent className="[&]:absolute [&]:right-0 [&]:left-auto [&]:w-[260px] [&]:z-50 [&]:overflow-visible md:[&]:w-[280px]">
-        <ul className="grid gap-1.5 p-1.5 md:gap-2 md:p-1">
+      <NavigationMenuContent className="absolute right-0 left-auto w-[260px] z-50 overflow-visible md:w-[280px]">
+        <ul className="grid gap-2 p-1">
           {menuItems.map((item) => (
             <MenuItem
               key={item.href}
@@ -69,4 +69,3 @@ export function AccountMenu({ authenticated }: AccountMenuProps) {
     </NavigationMenuItem>
   );
 }
-
