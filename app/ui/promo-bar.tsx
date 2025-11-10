@@ -97,7 +97,7 @@ export default function PromoBar() {
   const { index, cycleMessage } = usePromoCycle(MESSAGES.length, INTERVAL);
 
   return (
-    <div className="w-full border-b bg-primary">
+    <div className="w-full border-b bg-primary" data-promo-bar>
       <div className="grid grid-cols-[auto_1fr_auto] items-center py-2">
         <ArrowButton direction="left" onClick={() => cycleMessage(-1)} />
 

@@ -1,10 +1,18 @@
+'use client';
+
 import TrustedByCarousel from './ui/trusted-by-carousel';
 import HeroCarousel from './ui/hero-carousel';
+import { useHeaderHeight } from '@/lib/hooks/useHeaderHeight';
 
 export default function Home() {
+  const headerHeight = useHeaderHeight();
+
   return (
     <main>
-      <section className="grid grid-rows-[1fr_auto] h-[calc(100vh-100px)]">
+      <section
+        className="grid grid-rows-[1fr_auto]"
+        style={{ height: `calc(100vh - ${headerHeight}px)` }}
+      >
         <HeroCarousel />
 
         <div className="relative w-screen flex flex-col pt-6 pb-2">

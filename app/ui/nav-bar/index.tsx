@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { Logo, SearchButton } from './nav-elements';
-import { NavLinks, MobileNavLinks } from './nav-links';
+import { NavLinks } from './nav-links';
 import { AccountMenu } from './account-menu';
 import { CartMenu } from './cart-menu';
 
@@ -17,13 +17,16 @@ export default function NavBar() {
   const isMobile = useIsMobile();
 
   return (
-    <nav className="sticky top-0 z-50 select-none bg-background w-full">
+    <nav
+      className="sticky top-0 z-50 select-none bg-background w-full"
+      data-nav-bar
+    >
       <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 px-2 py-3 md:py-4">
         {isMobile && (
           <div className="flex items-center gap-1">
             <NavigationMenu viewport={false} className="max-w-full">
               <NavigationMenuList>
-                <MobileNavLinks />
+                <NavLinks />
               </NavigationMenuList>
             </NavigationMenu>
             <SearchButton />
