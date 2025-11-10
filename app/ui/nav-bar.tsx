@@ -87,6 +87,30 @@ function SearchButton() {
 }
 
 function AccountMenu({ authenticated }: { authenticated: boolean }) {
+  const elementInAccountMenu = (
+    href: string,
+    icon: React.ReactNode,
+    label: string,
+    description: string
+  ) => {
+    return (
+      <li>
+        <NavigationMenuLink
+          href={href}
+          className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-md hover:bg-accent transition-colors"
+        >
+          {icon}
+          <div>
+            <h3 className="text-sm font-medium leading-none">{label}</h3>
+            <p className="text-muted-foreground line-clamp-2 text-xs md:text-sm leading-snug mt-0.5 md:mt-1">
+              {description}
+            </p>
+          </div>
+        </NavigationMenuLink>
+      </li>
+    );
+  };
+
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
@@ -95,21 +119,21 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
       >
         <UserRound className="size-4" />
       </NavigationMenuTrigger>
-      <NavigationMenuContent className="absolute! right-0! left-auto! md:right-0! z-50! overflow-visible! w-[calc(100vw-1rem)]! md:w-[280px]!">
-        <ul className="grid gap-2 p-2">
+      <NavigationMenuContent className="[&]:absolute [&]:right-0 [&]:left-auto [&]:w-[260px] [&]:z-50 [&]:overflow-visible md:[&]:w-[280px]">
+        <ul className="grid gap-1.5 p-1.5 md:gap-2 md:p-1">
           {authenticated ? (
             <>
               <li>
                 <NavigationMenuLink
                   href="/orders"
-                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-md hover:bg-accent transition-colors"
                 >
-                  <Package className="size-5 text-muted-foreground" />
+                  <Package className="size-4 md:size-5 text-muted-foreground" />
                   <div>
                     <div className="text-sm font-medium leading-none">
                       Orders
                     </div>
-                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                    <p className="text-muted-foreground line-clamp-2 text-xs md:text-sm leading-snug mt-0.5 md:mt-1">
                       Track your orders and purchases
                     </p>
                   </div>
@@ -118,14 +142,14 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
               <li>
                 <NavigationMenuLink
                   href="/signout"
-                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-md hover:bg-accent transition-colors"
                 >
-                  <LogOut className="size-5 text-muted-foreground" />
+                  <LogOut className="size-4 md:size-5 text-muted-foreground" />
                   <div>
                     <div className="text-sm font-medium leading-none">
                       Sign Out
                     </div>
-                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                    <p className="text-muted-foreground line-clamp-2 text-xs md:text-sm leading-snug mt-0.5 md:mt-1">
                       Log out of your account
                     </p>
                   </div>
@@ -137,14 +161,14 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
               <li>
                 <NavigationMenuLink
                   href="/signup"
-                  className="flex items-center gap-4 p-4 rounded-md hover:bg-accent transition-colors"
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-md hover:bg-accent transition-colors"
                 >
-                  <UserPlus className="size-5 text-muted-foreground" />
+                  <UserPlus className="size-4 md:size-5 text-muted-foreground" />
                   <div>
                     <div className="text-sm font-medium leading-none">
                       Sign Up
                     </div>
-                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                    <p className="text-muted-foreground line-clamp-2 text-xs md:text-sm leading-snug mt-0.5 md:mt-1">
                       Create a new account
                     </p>
                   </div>
@@ -153,14 +177,14 @@ function AccountMenu({ authenticated }: { authenticated: boolean }) {
               <li>
                 <NavigationMenuLink
                   href="/login"
-                  className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition-colors"
+                  className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-md hover:bg-accent transition-colors"
                 >
-                  <LogIn className="size-5 text-muted-foreground" />
+                  <LogIn className="size-4 md:size-5 text-muted-foreground" />
                   <div>
                     <div className="text-sm font-medium leading-none">
                       Log In
                     </div>
-                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
+                    <p className="text-muted-foreground line-clamp-2 text-xs md:text-sm leading-snug mt-0.5 md:mt-1">
                       Sign in to your account
                     </p>
                   </div>
@@ -192,11 +216,13 @@ function CartMenu() {
       >
         <ShoppingBag className="size-4" />
       </NavigationMenuTrigger>
-      <NavigationMenuContent className="absolute! right-0! left-auto! md:right-0! z-50! overflow-visible! w-[calc(100vw-1rem)]! md:w-[350px]!">
-        <div className="p-4">
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold">Shopping Cart</h3>
-            <p className="text-muted-foreground text-sm">
+      <NavigationMenuContent className="[&]:absolute [&]:right-0 [&]:left-auto [&]:w-[280px] [&]:z-50 [&]:overflow-visible md:[&]:w-[350px]">
+        <div className="p-3 md:p-4">
+          <div className="mb-3 md:mb-4">
+            <h3 className="text-base md:text-lg font-semibold">
+              Shopping Cart
+            </h3>
+            <p className="text-muted-foreground text-xs md:text-sm">
               {isEmpty
                 ? 'Your cart is empty'
                 : `${cartItems.length} items in cart`}
@@ -204,13 +230,15 @@ function CartMenu() {
           </div>
 
           {isEmpty ? (
-            <div className="py-8 text-center">
-              <ShoppingBag className="size-12 mx-auto mb-4 text-muted-foreground/50" />
-              <p className="text-muted-foreground text-sm mb-4">
+            <div className="py-6 md:py-8 text-center">
+              <ShoppingBag className="size-10 md:size-12 mx-auto mb-3 md:mb-4 text-muted-foreground/50" />
+              <p className="text-muted-foreground text-xs md:text-sm mb-3 md:mb-4">
                 Your cart is empty
               </p>
               <NavigationMenuLink href="/shop" className="w-full">
-                <Button className="w-full">Continue Shopping</Button>
+                <Button className="w-full text-sm md:text-base">
+                  Continue Shopping
+                </Button>
               </NavigationMenuLink>
             </div>
           ) : (
@@ -253,7 +281,7 @@ export default function NavBar() {
   const [isAuthenticated] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 select-none bg-background w-full overflow-visible">
+    <nav className="sticky top-0 z-50 select-none bg-background w-full">
       <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 px-2 py-3 md:py-4">
         <div className="flex items-center md:hidden">
           <SearchButton />
@@ -270,12 +298,9 @@ export default function NavBar() {
 
         <div className="md:col-start-2" />
 
-        <div className="flex items-center gap-1 sm:mr-4 ml-auto md:col-start-3 overflow-visible">
-          <NavigationMenu
-            viewport={false}
-            className="max-w-full overflow-visible"
-          >
-            <NavigationMenuList className="overflow-visible">
+        <div className="flex items-center gap-1 sm:mr-4 ml-auto md:col-start-3">
+          <NavigationMenu viewport={false} className="max-w-full">
+            <NavigationMenuList>
               <div className="hidden md:block">
                 <SearchButton />
               </div>
