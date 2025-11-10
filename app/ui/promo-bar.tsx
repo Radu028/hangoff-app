@@ -69,7 +69,7 @@ function ArrowButton({
     <button
       aria-label={`${direction} promo`}
       onClick={onClick}
-      className="text-white px-8 bg-transparent hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 cursor-pointer"
+      className="text-white px-4 md:px-8 bg-transparent hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 cursor-pointer"
     >
       {Icon}
     </button>
