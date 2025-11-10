@@ -11,7 +11,11 @@ export default function Home() {
     <main>
       <section
         className="grid grid-rows-[1fr_auto]"
-        style={{ height: `calc(100vh - ${headerHeight}px)` }}
+        style={{
+          height: `calc(100dvh - ${headerHeight}px)`,
+          // Fallback for older browsers
+          minHeight: `calc(100vh - ${headerHeight}px)`,
+        }}
       >
         <HeroCarousel />
 

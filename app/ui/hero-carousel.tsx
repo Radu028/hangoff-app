@@ -96,7 +96,7 @@ function HeroText() {
   return (
     <div className="absolute inset-0 grid place-items-center pointer-events-none z-10">
       <div className="grid grid-cols-1 text-white px-4">
-        <p className="text-4xl md:text-2xl font-bold text-center">
+        <p className="text-md md:text-2xl font-bold text-center">
           Shot-uri functionale, ca tu sa functionezi
         </p>
         <p className="text-xs font-medium text-left leading-tight">
@@ -105,7 +105,7 @@ function HeroText() {
         </p>
 
         <div className="flex-col items-center text-center gap-4">
-          <ShieldCheck className="size-12 mx-auto mt-8" />
+          <ShieldCheck className="size-10 md:size-12 mx-auto mt-8" />
           <p className="text-[0.6rem] font-extrabold leading-tight mt-1">
             SWISS MADE
           </p>
@@ -151,13 +151,13 @@ function NavigationButton({
     <button
       onClick={onClick}
       className={`absolute ${
-        isPrev ? 'left-4' : 'right-4'
-      } top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-white/10 hover:bg-white/20 border-none text-white backdrop-blur-sm flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 transition-opacity duration-300 ${
+        isPrev ? 'left-2 md:left-4' : 'right-2 md:right-4'
+      } top-1/2 -translate-y-1/2 z-10 size-8 md:size-10 rounded-full bg-white/10 hover:bg-white/20 border-none text-white backdrop-blur-sm flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 transition-opacity duration-300 ${
         isHidden ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       aria-label={`${isPrev ? 'Previous' : 'Next'} slide`}
     >
-      <Icon className="size-6" />
+      <Icon className="size-4 md:size-6" />
     </button>
   );
 }
@@ -175,7 +175,7 @@ function NavigationDots({
 }) {
   return (
     <div
-      className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-3 py-2"
+      className="absolute bottom-1 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-3 py-2"
       onMouseEnter={() => onHoverChange(true)}
       onMouseLeave={() => onHoverChange(false)}
     >
