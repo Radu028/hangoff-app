@@ -52,10 +52,15 @@ function LogoStrip({ keyPrefix }: { keyPrefix: string }) {
 
 export default function TrustedByCarousel() {
   return (
-    <div className="relative w-full h-full overflow-hidden flex items-center">
-      <div className="flex">
-        <LogoStrip keyPrefix="first" />
-        <LogoStrip keyPrefix="second" />
+    <div className="relative w-screen flex flex-col pt-4 md:pt-6 pb-2">
+      <h2 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2 text-center">
+        TRUSTED BY
+      </h2>
+      <div className="overflow-hidden flex items-center">
+        <div className="flex">
+          <LogoStrip keyPrefix="first" />
+          <LogoStrip keyPrefix="second" />
+        </div>
       </div>
     </div>
   );

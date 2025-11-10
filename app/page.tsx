@@ -19,12 +19,7 @@ export default function Home() {
       >
         <HeroCarousel />
 
-        <div className="relative w-screen flex flex-col pt-6 pb-2">
-          <h2 className="text-4xl font-bold mb-2 text-center">TRUSTED BY</h2>
-          <div className="flex items-center overflow-hidden">
-            <TrustedByCarousel />
-          </div>
-        </div>
+        <TrustedByCarousel />
       </section>
     </main>
   );
