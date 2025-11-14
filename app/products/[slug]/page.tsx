@@ -1,4 +1,6 @@
 import ProductBreadcrumbs from '@/app/ui/breadcrumbs/product';
+import { getProductBySlug } from '@/lib/products';
+import { notFound } from 'next/navigation';
 
 export default async function ProductPage({
   params,
@@ -7,10 +9,16 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
 
+  const product = getProductBySlug(slug);
+
+  if (!product) {
+    return notFound();
+  }
+
   return (
     <>
-      <ProductBreadcrumbs slug={slug} />
-      <h1>Product</h1>
+      <ProductBreadcrumbs productName={product.name} />
+      <h1>{product.name}</h1>
     </>
   );
 }

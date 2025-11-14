@@ -6,15 +6,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import slugToTitle from '@/lib/slugToTitle';
 
 type Props = {
-  slug: string;
+  productName: string;
 };
 
-export default function ProductBreadcrumbs({ slug }: Props) {
-  const title = slugToTitle(slug);
-
+export default function ProductBreadcrumbs({ productName }: Props) {
   return (
     <>
       <Breadcrumb>
@@ -28,7 +25,7 @@ export default function ProductBreadcrumbs({ slug }: Props) {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{title}</BreadcrumbPage>
+            <BreadcrumbPage>{productName}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
