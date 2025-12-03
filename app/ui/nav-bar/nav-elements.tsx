@@ -1,12 +1,10 @@
-'use client';
+'use client'
 
-import {
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from '@/components/ui/navigation-menu';
-import { Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import Image from 'next/image'
+import { Search } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+import { NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu'
 
 export function Logo() {
   return (
@@ -22,7 +20,7 @@ export function Logo() {
         />
       </NavigationMenuLink>
     </NavigationMenuItem>
-  );
+  )
 }
 
 export function SearchButton() {
@@ -38,5 +36,5 @@ export function SearchButton() {
     >
       <Search className="size-4" />
     </Button>
-  );
+  )
 }

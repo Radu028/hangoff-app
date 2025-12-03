@@ -1,15 +1,15 @@
 export type ProductVariant = {
-  id: string;
-  label: string;
-  price: number;
-};
+  id: string
+  label: string
+  price: number
+}
 
 export type Product = {
-  slug: string;
-  name: string;
-  basePrice?: number;
-  variants?: ProductVariant[];
-};
+  slug: string
+  name: string
+  basePrice?: number
+  variants?: ProductVariant[]
+}
 
 export const products: Product[] = [
   {
@@ -32,8 +32,8 @@ export const products: Product[] = [
     name: 'Hanorac HangOFF',
     basePrice: 199,
   },
-];
+]
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((product) => product.slug === slug);
+  return products.find((product) => product.slug === slug)
 }

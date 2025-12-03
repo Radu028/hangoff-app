@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
 // Better-auth requires these tables
 export const user = pgTable('user', {
@@ -9,7 +9,7 @@ export const user = pgTable('user', {
   image: text('image'),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
-});
+})
 
 export const session = pgTable('session', {
   id: text('id').primaryKey(),
@@ -22,7 +22,7 @@ export const session = pgTable('session', {
   userId: text('userId')
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' }),
-});
+})
 
 export const account = pgTable('account', {
   id: text('id').primaryKey(),
@@ -40,7 +40,7 @@ export const account = pgTable('account', {
   password: text('password'),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
-});
+})
 
 export const verification = pgTable('verification', {
   id: text('id').primaryKey(),
@@ -49,5 +49,4 @@ export const verification = pgTable('verification', {
   expiresAt: timestamp('expiresAt').notNull(),
   createdAt: timestamp('createdAt').defaultNow(),
   updatedAt: timestamp('updatedAt').defaultNow(),
-});
-
+})

@@ -1,123 +1,117 @@
-'use client';
+'use client'
 
-import { useState, useCallback, useEffect } from 'react';
-import Image from 'next/image';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from '@/components/ui/carousel';
-import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react'
+import Image from 'next/image'
+import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react'
 
-const IMAGES = ['/hero/boxes.jpg', '/hero/ice.jpg'] as const;
-const AUTO_SWIPE_INTERVAL = 5000; // milliseconds
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel'
+
+const IMAGES = ['/hero/boxes.jpg', '/hero/ice.jpg'] as const
+const AUTO_SWIPE_INTERVAL = 5000 // milliseconds
 
 function useCarouselAutoplay(api: CarouselApi | undefined) {
-  const [autoSwipeKey, setAutoSwipeKey] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const [autoSwipeKey, setAutoSwipeKey] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
 
   const resetTimer = useCallback(() => {
-    setAutoSwipeKey((prev) => prev + 1);
-  }, []);
+    setAutoSwipeKey((prev) => prev + 1)
+  }, [])
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      setIsVisible(!document.hidden);
-    };
+      setIsVisible(!document.hidden)
+    }
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange)
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [])
 
   useEffect(() => {
-    if (!api || !isVisible) return;
+    if (!api || !isVisible) return
 
     const interval = setInterval(() => {
-      api.scrollNext();
-    }, AUTO_SWIPE_INTERVAL);
+      api.scrollNext()
+    }, AUTO_SWIPE_INTERVAL)
 
-    return () => clearInterval(interval);
-  }, [api, autoSwipeKey, isVisible]);
+    return () => clearInterval(interval)
+  }, [api, autoSwipeKey, isVisible])
 
-  return resetTimer;
+  return resetTimer
 }
 
 function useCarouselNavigation(api: CarouselApi | undefined) {
-  const [current, setCurrent] = useState(0);
-  const resetTimer = useCarouselAutoplay(api);
+  const [current, setCurrent] = useState(0)
+  const resetTimer = useCarouselAutoplay(api)
 
   useEffect(() => {
-    if (!api) return;
+    if (!api) return
 
     const onSelect = () => {
-      setCurrent(api.selectedScrollSnap());
-    };
+      setCurrent(api.selectedScrollSnap())
+    }
 
     // Reset timer on any manual interaction (drag, swipe, etc.)
     const onPointerDown = () => {
-      resetTimer();
-    };
+      resetTimer()
+    }
 
-    api.on('select', onSelect);
-    api.on('pointerDown', onPointerDown);
-    onSelect();
+    api.on('select', onSelect)
+    api.on('pointerDown', onPointerDown)
+    onSelect()
 
     return () => {
-      api.off('select', onSelect);
-      api.off('pointerDown', onPointerDown);
-    };
-  }, [api, resetTimer]);
+      api.off('select', onSelect)
+      api.off('pointerDown', onPointerDown)
+    }
+  }, [api, resetTimer])
 
   const scrollPrev = useCallback(() => {
-    api?.scrollPrev();
-    resetTimer();
-  }, [api, resetTimer]);
+    api?.scrollPrev()
+    resetTimer()
+  }, [api, resetTimer])
 
   const scrollNext = useCallback(() => {
-    api?.scrollNext();
-    resetTimer();
-  }, [api, resetTimer]);
+    api?.scrollNext()
+    resetTimer()
+  }, [api, resetTimer])
 
   const scrollTo = useCallback(
     (index: number) => {
-      api?.scrollTo(index);
-      resetTimer();
+      api?.scrollTo(index)
+      resetTimer()
     },
-    [api, resetTimer]
-  );
+    [api, resetTimer],
+  )
 
-  return { current, scrollPrev, scrollNext, scrollTo };
+  return { current, scrollPrev, scrollNext, scrollTo }
 }
 
 function HeroText() {
   return (
-    <div className="absolute inset-0 grid place-items-center pointer-events-none z-10 [@media(max-height:500px)]:hidden">
-      <div className="grid grid-cols-1 text-white px-4">
-        <p className="text-md md:text-2xl font-bold text-center">
+    <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center [@media(max-height:500px)]:hidden">
+      <div className="grid grid-cols-1 px-4 text-white">
+        <p className="text-md text-center font-bold md:text-2xl">
           Shot-uri functionale, ca tu sa functionezi
         </p>
-        <p className="text-xs font-medium text-left leading-tight">
+        <p className="text-left text-xs leading-tight font-medium">
           Simte-te bine si dupa petrece. <br />
           Suplimente alimentare, nu medicamente.
         </p>
 
-        <div className="flex-col items-center text-center gap-4">
-          <ShieldCheck className="size-10 md:size-12 mx-auto mt-8" />
-          <p className="text-[0.6rem] font-extrabold leading-tight mt-1">
-            SWISS MADE
-          </p>
+        <div className="flex-col items-center gap-4 text-center">
+          <ShieldCheck className="mx-auto mt-8 size-10 md:size-12" />
+          <p className="mt-1 text-[0.6rem] leading-tight font-extrabold">SWISS MADE</p>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function CarouselSlide({ image, index }: { image: string; index: number }) {
   return (
-    <CarouselItem className="pl-0 h-full">
+    <CarouselItem className="h-full pl-0">
       <div className="relative h-full">
         <Image
           src={image}
@@ -129,10 +123,10 @@ function CarouselSlide({ image, index }: { image: string; index: number }) {
             objectPosition: 'center center',
           }}
         />
-        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-black/20" />
       </div>
     </CarouselItem>
-  );
+  )
 }
 
 function NavigationButton({
@@ -140,26 +134,26 @@ function NavigationButton({
   onClick,
   isHidden,
 }: {
-  direction: 'prev' | 'next';
-  onClick: () => void;
-  isHidden: boolean;
+  direction: 'prev' | 'next'
+  onClick: () => void
+  isHidden: boolean
 }) {
-  const isPrev = direction === 'prev';
-  const Icon = isPrev ? ChevronLeft : ChevronRight;
+  const isPrev = direction === 'prev'
+  const Icon = isPrev ? ChevronLeft : ChevronRight
 
   return (
     <button
       onClick={onClick}
       className={`absolute ${
         isPrev ? 'left-2 md:left-4' : 'right-2 md:right-4'
-      } top-1/2 -translate-y-1/2 z-10 size-8 md:size-10 rounded-full bg-white/10 hover:bg-white/20 border-none text-white backdrop-blur-sm flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 transition-opacity duration-300 ${
-        isHidden ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      } top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border-none bg-white/10 text-white backdrop-blur-sm transition-opacity duration-300 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 md:size-10 ${
+        isHidden ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
       aria-label={`${isPrev ? 'Previous' : 'Next'} slide`}
     >
       <Icon className="size-4 md:size-6" />
     </button>
-  );
+  )
 }
 
 function NavigationDots({
@@ -168,14 +162,14 @@ function NavigationDots({
   onSelect,
   onHoverChange,
 }: {
-  count: number;
-  current: number;
-  onSelect: (index: number) => void;
-  onHoverChange: (isHovered: boolean) => void;
+  count: number
+  current: number
+  onSelect: (index: number) => void
+  onHoverChange: (isHovered: boolean) => void
 }) {
   return (
     <div
-      className="absolute bottom-1 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-3 py-2"
+      className="absolute bottom-1 left-1/2 z-10 flex -translate-x-1/2 gap-2 px-3 py-2"
       onMouseEnter={() => onHoverChange(true)}
       onMouseLeave={() => onHoverChange(false)}
     >
@@ -183,21 +177,20 @@ function NavigationDots({
         <button
           key={index}
           onClick={() => onSelect(index)}
-          className={`size-2 rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 cursor-pointer ${
+          className={`size-2 cursor-pointer rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
             current === index ? 'bg-white/90' : 'bg-white/30 hover:bg-white/50'
           }`}
           aria-label={`Go to slide ${index + 1}`}
         />
       ))}
     </div>
-  );
+  )
 }
 
 export default function HeroCarousel() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [isDotsHovered, setIsDotsHovered] = useState(false);
-  const { current, scrollPrev, scrollNext, scrollTo } =
-    useCarouselNavigation(api);
+  const [api, setApi] = useState<CarouselApi>()
+  const [isDotsHovered, setIsDotsHovered] = useState(false)
+  const { current, scrollPrev, scrollNext, scrollTo } = useCarouselNavigation(api)
 
   return (
     <Carousel
@@ -213,17 +206,9 @@ export default function HeroCarousel() {
 
       <HeroText />
 
-      <NavigationButton
-        direction="prev"
-        onClick={scrollPrev}
-        isHidden={isDotsHovered}
-      />
+      <NavigationButton direction="prev" onClick={scrollPrev} isHidden={isDotsHovered} />
 
-      <NavigationButton
-        direction="next"
-        onClick={scrollNext}
-        isHidden={isDotsHovered}
-      />
+      <NavigationButton direction="next" onClick={scrollNext} isHidden={isDotsHovered} />
 
       <NavigationDots
         count={IMAGES.length}
@@ -232,5 +217,5 @@ export default function HeroCarousel() {
         onHoverChange={setIsDotsHovered}
       />
     </Carousel>
-  );
+  )
 }

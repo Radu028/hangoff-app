@@ -1,11 +1,12 @@
-'use client';
+'use client'
 
-import TrustedByCarousel from './ui/trusted-by-carousel';
-import HeroCarousel from './ui/hero-carousel';
-import { useHeaderHeight } from '@/lib/hooks/useHeaderHeight';
+import { useHeaderHeight } from '@/lib/hooks/useHeaderHeight'
+
+import HeroCarousel from './ui/hero-carousel'
+import TrustedByCarousel from './ui/trusted-by-carousel'
 
 export default function Home() {
-  const headerHeight = useHeaderHeight();
+  const headerHeight = useHeaderHeight()
 
   return (
     <main>
@@ -22,5 +23,5 @@ export default function Home() {
         <TrustedByCarousel />
       </section>
     </main>
-  );
+  )
 }

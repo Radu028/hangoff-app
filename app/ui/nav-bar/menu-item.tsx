@@ -1,78 +1,72 @@
-'use client';
+'use client'
 
 import {
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-  NavigationMenuContent,
-} from '@/components/ui/navigation-menu';
+} from '@/components/ui/navigation-menu'
 
 interface SimpleLinkProps {
-  href: string;
-  label: string;
+  href: string
+  label: string
 }
 
 interface DetailedLinkProps {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-  description: string;
+  href: string
+  icon: React.ReactNode
+  label: string
+  description: string
 }
 
 interface MenuItemProps {
-  href: string;
-  icon?: React.ReactNode;
-  label: string;
-  description?: string;
-  variant?: 'simple' | 'detailed';
+  href: string
+  icon?: React.ReactNode
+  label: string
+  description?: string
+  variant?: 'simple' | 'detailed'
 }
 
 interface MenuDropdownProps {
-  trigger: React.ReactNode;
-  items: (SimpleLinkProps | DetailedLinkProps)[];
-  position?: 'left' | 'right';
-  width?: string;
-  ariaLabel?: string;
+  trigger: React.ReactNode
+  items: (SimpleLinkProps | DetailedLinkProps)[]
+  position?: 'left' | 'right'
+  width?: string
+  ariaLabel?: string
 }
 
-export function MenuItem({
-  href,
-  icon,
-  label,
-  description,
-  variant = 'simple',
-}: MenuItemProps) {
+export function MenuItem({ href, icon, label, description, variant = 'simple' }: MenuItemProps) {
   if (variant === 'simple' || (!icon && !description)) {
     return (
       <li>
         <NavigationMenuLink
           href={href}
-          className="block p-3 rounded-md hover:bg-accent transition-colors"
+          className="hover:bg-accent block rounded-md p-3 transition-colors"
         >
           <div className="text-sm font-medium">{label}</div>
         </NavigationMenuLink>
       </li>
-    );
+    )
   }
 
   return (
     <li>
       <NavigationMenuLink
         href={href}
-        className="flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-md hover:bg-accent transition-colors"
+        className="hover:bg-accent flex items-center gap-2 rounded-md p-2 transition-colors md:gap-3 md:p-3"
       >
         {icon}
         <div>
-          <h3 className="text-sm font-medium leading-none">{label}</h3>
+          <h3 className="text-sm leading-none font-medium">{label}</h3>
           {description && (
-            <p className="text-muted-foreground line-clamp-2 text-xs md:text-sm leading-snug mt-0.5 md:mt-1">
+            <p className="text-muted-foreground mt-0.5 line-clamp-2 text-xs leading-snug md:mt-1 md:text-sm">
               {description}
             </p>
           )}
         </div>
       </NavigationMenuLink>
     </li>
-  );
+  )
 }
 
 export function MenuDropdown({
@@ -82,8 +76,7 @@ export function MenuDropdown({
   width = '260px',
   ariaLabel,
 }: MenuDropdownProps) {
-  const positionClasses =
-    position === 'left' ? 'left-0 right-auto' : 'right-0 left-auto';
+  const positionClasses = position === 'left' ? 'left-0 right-auto' : 'right-0 left-auto'
 
   return (
     <NavigationMenuItem>
@@ -99,7 +92,7 @@ export function MenuDropdown({
       >
         <ul className="grid gap-1 p-1">
           {items.map((item) => {
-            const hasDetails = 'icon' in item && 'description' in item;
+            const hasDetails = 'icon' in item && 'description' in item
             return (
               <MenuItem
                 key={item.href}
@@ -109,10 +102,10 @@ export function MenuDropdown({
                 description={hasDetails ? item.description : undefined}
                 variant={hasDetails ? 'detailed' : 'simple'}
               />
-            );
+            )
           })}
         </ul>
       </NavigationMenuContent>
     </NavigationMenuItem>
-  );
+  )
 }

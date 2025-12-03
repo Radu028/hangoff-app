@@ -5,11 +5,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+} from '@/components/ui/breadcrumb'
 
 type Props = {
-  productName: string;
-};
+  productName: string
+}
 
 export default function ProductBreadcrumbs({ productName }: Props) {
   return (
@@ -30,5 +30,5 @@ export default function ProductBreadcrumbs({ productName }: Props) {
         </BreadcrumbList>
       </Breadcrumb>
     </>
-  );
+  )
 }

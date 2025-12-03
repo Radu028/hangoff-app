@@ -1,18 +1,15 @@
-import ProductBreadcrumbs from '@/app/ui/breadcrumbs/product';
-import { getProductBySlug } from '@/lib/products';
-import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation'
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+import { getProductBySlug } from '@/lib/products'
+import ProductBreadcrumbs from '@/app/ui/breadcrumbs/product'
 
-  const product = getProductBySlug(slug);
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+
+  const product = getProductBySlug(slug)
 
   if (!product) {
-    return notFound();
+    return notFound()
   }
 
   return (
@@ -20,5 +17,5 @@ export default async function ProductPage({
       <ProductBreadcrumbs productName={product.name} />
       <h1>{product.name}</h1>
     </>
-  );
+  )
 }

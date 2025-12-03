@@ -3,4 +3,4 @@ export const LINKS = [
   { href: '/about', label: 'About' },
   { href: '/shop', label: 'Shop' },
   { href: '/merch', label: 'Merch' },
-];
+]
