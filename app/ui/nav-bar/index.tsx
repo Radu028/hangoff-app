@@ -16,7 +16,10 @@ export default function NavBar() {
   const isMobile = useIsMobile()
 
   return (
-    <nav className="bg-background sticky top-0 z-50 w-full select-none" data-nav-bar>
+    <nav
+      className="bg-background/60 sticky top-0 z-50 w-full select-none backdrop-blur-2xl border-b border-black/5"
+      data-nav-bar
+    >
       <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 px-2 py-3 md:py-4">
         {isMobile && (
           <div className="flex items-center gap-1">

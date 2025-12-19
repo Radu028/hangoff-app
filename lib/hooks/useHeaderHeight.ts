@@ -25,6 +25,7 @@ export function useHeaderHeight() {
       }
 
       setHeight(totalHeight)
+      document.documentElement.style.setProperty('--header-height', `${totalHeight}px`)
     }
 
     updateHeaderHeight()

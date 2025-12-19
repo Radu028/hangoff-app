@@ -42,7 +42,7 @@ function LogoStrip({ keyPrefix }: { keyPrefix: string }) {
             alt={`Logo ${(index % IMAGES.length) + 1}`}
             width={120}
             height={60}
-            className="max-h-full object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
+            className="max-h-[35px] md:max-h-[50px] w-auto object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
           />
         </div>
       ))}
@@ -52,8 +52,8 @@ function LogoStrip({ keyPrefix }: { keyPrefix: string }) {
 
 export default function TrustedByCarousel() {
   return (
-    <div className="relative flex w-screen flex-col pt-4 pb-2 md:pt-6">
-      <h2 className="mb-1 text-center text-2xl font-bold md:mb-2 md:text-4xl">TRUSTED BY</h2>
+    <div className="relative flex w-full flex-col py-6 md:py-10">
+      <h2 className="mb-4 text-center text-xl font-bold md:mb-8 md:text-3xl text-primary tracking-[0.1em]">TRUSTED BY</h2>
       <div className="flex items-center overflow-hidden">
         <div className="flex">
           <LogoStrip keyPrefix="first" />

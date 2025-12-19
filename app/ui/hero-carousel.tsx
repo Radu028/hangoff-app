@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react'
 
+import { motion } from 'motion/react'
+import { cn } from '@/lib/utils'
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel'
 
 const IMAGES = ['/hero/boxes.jpg', '/hero/ice.jpg'] as const
@@ -91,20 +93,27 @@ function useCarouselNavigation(api: CarouselApi | undefined) {
 function HeroText() {
   return (
     <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center [@media(max-height:500px)]:hidden">
-      <div className="grid grid-cols-1 px-4 text-white">
-        <p className="text-md text-center font-bold md:text-2xl">
-          Shot-uri functionale, ca tu sa functionezi
-        </p>
-        <p className="text-left text-xs leading-tight font-medium">
-          Simte-te bine si dupa petrece. <br />
-          Suplimente alimentare, nu medicamente.
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col items-center px-6 text-white text-center -translate-y-6 sm:translate-y-0"
+      >
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-6xl lg:text-7xl leading-[1.1]">
+          Shot-uri funcționale, <br />
+          <span className="text-primary-foreground/90">ca tu să funcționezi</span>
+        </h1>
+        <p className="mt-4 max-w-md text-xs sm:text-sm md:text-lg text-white/80 font-light leading-relaxed px-4 sm:px-0">
+          Simte-te bine și după petrecere. Suplimente alimentare elvețiene premium, create pentru performanță zilnică.
         </p>
 
-        <div className="flex-col items-center gap-4 text-center">
-          <ShieldCheck className="mx-auto mt-8 size-10 md:size-12" />
-          <p className="mt-1 text-[0.6rem] leading-tight font-extrabold">SWISS MADE</p>
+        <div className="mt-8 md:mt-12 flex flex-col items-center gap-2">
+          <div className="rounded-full bg-white/5 p-2 md:p-3 backdrop-blur-xl border border-white/10 ring-1 ring-white/20">
+            <ShieldCheck className="size-6 md:size-10" />
+          </div>
+          <p className="text-[0.6rem] md:text-[0.7rem] tracking-[0.3em] font-bold uppercase opacity-80">Swiss Made</p>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
@@ -144,11 +153,11 @@ function NavigationButton({
   return (
     <button
       onClick={onClick}
-      className={`absolute ${
-        isPrev ? 'left-2 md:left-4' : 'right-2 md:right-4'
-      } top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border-none bg-white/10 text-white backdrop-blur-sm transition-opacity duration-300 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 md:size-10 ${
-        isHidden ? 'pointer-events-none opacity-0' : 'opacity-100'
-      }`}
+      className={cn(
+        "absolute top-1/2 z-10 flex size-7 md:size-10 -translate-y-1/2 items-center justify-center rounded-full border-none bg-white/5 text-white/40 backdrop-blur-md transition-all duration-300 hover:bg-white/20 hover:text-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25",
+        isPrev ? "left-2 md:left-4" : "right-2 md:right-4",
+        isHidden ? "pointer-events-none opacity-0" : "opacity-100"
+      )}
       aria-label={`${isPrev ? 'Previous' : 'Next'} slide`}
     >
       <Icon className="size-4 md:size-6" />
@@ -177,9 +186,8 @@ function NavigationDots({
         <button
           key={index}
           onClick={() => onSelect(index)}
-          className={`size-2 cursor-pointer rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${
-            current === index ? 'bg-white/90' : 'bg-white/30 hover:bg-white/50'
-          }`}
+          className={`size-2 cursor-pointer rounded-full backdrop-blur-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/25 ${current === index ? 'bg-white/90' : 'bg-white/30 hover:bg-white/50'
+            }`}
           aria-label={`Go to slide ${index + 1}`}
         />
       ))}
