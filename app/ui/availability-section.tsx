@@ -9,7 +9,11 @@ const LOGOS = [
   { src: '/availability/sezamo.svg', alt: 'sezamo' },
   { src: '/availability/freshful.svg', alt: 'Freshful' },
   { src: '/availability/biutiful.svg', alt: 'Biutiful' },
-  { src: '/availability/fratelli.svg', alt: 'Fratelli' },
+  {
+    src: '/availability/fratelli.svg',
+    alt: 'Fratelli',
+    className: 'h-12 w-28 md:h-24 md:w-48'
+  },
   { src: '/availability/nostalgia.svg', alt: 'Nostalgia' },
 ];
 
@@ -67,7 +71,8 @@ export default function AvailabilitySection() {
             {LOGOS.map((logo, index) => (
               <div
                 key={index}
-                className="flex h-8 w-28 shrink-0 items-center justify-center md:h-16 md:w-48"
+                className={`flex shrink-0 items-center justify-center ${logo.className || 'h-8 w-28 md:h-16 md:w-48'
+                  }`}
               >
                 <Image
                   src={logo.src}
