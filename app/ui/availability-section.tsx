@@ -4,8 +4,6 @@ import { type ReactNode } from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 
-import { Separator } from '@/components/ui/separator';
-
 const LOGOS = [
   { src: '/availability/boltfood.svg', alt: 'Bolt Food' },
   { src: '/availability/sezamo.svg', alt: 'sezamo' },
@@ -38,6 +36,7 @@ const Marquee = ({
           ease: 'linear',
         }}
       >
+        {children}
         {children}
       </motion.div>
     </div>
@@ -83,7 +82,6 @@ export default function AvailabilitySection() {
           </Marquee>
         </div>
       </div>
-
     </section>
   );
 }

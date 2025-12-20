@@ -67,18 +67,16 @@ function ArrowButton({ direction, onClick }: { direction: 'left' | 'right'; onCl
 
 function PromoMessage({ text, keyId }: { text: string; keyId: number }) {
   return (
-    <AnimatePresence mode="wait">
-      <motion.p
-        key={keyId}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="whitespace-nowrap"
-      >
-        {text}
-      </motion.p>
-    </AnimatePresence>
+    <motion.p
+      key={keyId}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="whitespace-nowrap"
+    >
+      {text}
+    </motion.p>
   )
 }
 
@@ -91,7 +89,9 @@ export default function PromoBar() {
         <ArrowButton direction="left" onClick={() => cycleMessage(-1)} />
 
         <div className="col-start-2 overflow-hidden text-center text-xs text-white">
-          <PromoMessage text={MESSAGES[index]} keyId={index} />
+          <AnimatePresence mode="wait">
+            <PromoMessage text={MESSAGES[index]} keyId={index} />
+          </AnimatePresence>
         </div>
 
         <ArrowButton direction="right" onClick={() => cycleMessage(1)} />
