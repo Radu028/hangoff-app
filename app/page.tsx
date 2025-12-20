@@ -1,5 +1,5 @@
 import HeroCarousel from './ui/hero-carousel'
-import TrustedByCarousel from './ui/trusted-by-carousel'
+import AvailabilitySection from './ui/availability-section'
 
 export default function Home() {
   return (
@@ -7,9 +7,7 @@ export default function Home() {
       <div className="relative flex-1 min-h-0">
         <HeroCarousel />
       </div>
-      <div className="bg-background border-t">
-        <TrustedByCarousel />
-      </div>
+      <AvailabilitySection />
     </section>
   )
 }

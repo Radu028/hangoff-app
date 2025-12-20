@@ -17,7 +17,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className="bg-background/60 sticky top-0 z-50 w-full select-none backdrop-blur-2xl border-b border-black/5"
+      className="bg-white sticky top-0 z-50 w-full select-none border-b border-black/10"
       data-nav-bar
     >
       <div className="relative grid grid-cols-[auto_1fr_auto] items-center gap-2 px-2 py-3 md:py-4">
